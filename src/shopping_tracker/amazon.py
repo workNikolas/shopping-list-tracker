@@ -1,7 +1,8 @@
-import requests
 from bs4 import BeautifulSoup
 from decimal import Decimal
 from urllib.parse import urlparse
+
+import requests
 
 class AmazonFetcher:
     def __init__(self, url: str):
@@ -78,6 +79,24 @@ class AmazonParser:
             return None
 
         return availability_element.get_text(strip=True)
+
+    def parse_cover(self) -> str | None:
+        image_element = self.soup.find(id="landingImage")
+
+        if image_element is None:
+            return None
+
+        image_url = image_element.get("data-old-hires")
+
+        if image_url is not None:
+            return image_url
+
+        image_url = image_element.get("src")
+
+        if image_url is not None:
+            return image_url
+
+        return None
         
 def get_asin(url: str) -> str | None:
     parsed_url = urlparse(url)

@@ -9,6 +9,7 @@ class Product:
     external_id: str
     name: str
     url: str
+    image_url: str
     #language: str
     #national: bool
 

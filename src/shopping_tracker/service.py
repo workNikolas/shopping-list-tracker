@@ -6,6 +6,7 @@ from src.shopping_tracker.repository import (
     get_product, 
     get_product_history,
     get_all_products,
+    delete_product,
     )
 from dataclasses import dataclass
 
@@ -27,7 +28,7 @@ def track_amazon_product(url: str) -> TrackingResult:
     asin = get_asin(url)
     if asin is None:
         raise ValueError("Invalid Amazon product URL")
-    
+
     fetcher = AmazonFetcher(url)
     html = fetcher.fetch()
     parser = AmazonParser(html)
@@ -43,6 +44,7 @@ def track_amazon_product(url: str) -> TrackingResult:
         external_id=asin,
         name=title,
         url=url,
+        image_url=parser.parse_cover(),
     )
 
     snapshot = ProductSnapshot(
@@ -54,8 +56,6 @@ def track_amazon_product(url: str) -> TrackingResult:
 
     # Persists to database
     product_id = add_product(product)
-    print("PRODUCT ID:", product_id)
-    print("PRODUCT:", product)
     add_snapshot(product_id, snapshot)
 
     return TrackingResult(
@@ -63,6 +63,12 @@ def track_amazon_product(url: str) -> TrackingResult:
         product=product,
         snapshot=snapshot,
     )
+
+def refresh_product(product_id: int) -> TrackingResult:
+    product = get_product(product_id)
+    if product is None:
+        raise ValueError(f"Product {product_id} does not exist")
+    return track_amazon_product(product.url)
 
 def get_product_details(product_id) -> ProductDetails | None:
     product = get_product(product_id)
@@ -82,3 +88,6 @@ def get_product_details(product_id) -> ProductDetails | None:
 
 def list_tracked_products() -> list[tuple]:
     return get_all_products()
+
+def remove_product(product_id):
+    delete_product(product_id)

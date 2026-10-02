@@ -9,28 +9,28 @@ def add_product(product: Product) -> int:
     product_id = get_product_id(product.provider, product.external_id)
 
     if product_id is not None:
+        update_products(product_id, product)
         return product_id
 
     connection = create_connection()
     try:
         cursor = connection.execute(
                 """
-                INSERT INTO products (provider, external_id, name, url)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO products (provider, external_id, name, url, image_url)
+                VALUES (?, ?, ?, ?, ?)
                 """,
                 (
                     product.provider,
                     product.external_id,
                     product.name,
                     product.url,
+                    product.image_url,
                 ),
             ) 
-
-
         connection.commit()
         product_id = cursor.lastrowid
-    
         return product_id
+    
     finally:
         connection.close()
 
@@ -72,7 +72,7 @@ def get_product(product_id:int) -> Product | None:
     try:
         cursor = connection.execute(
             """
-            SELECT provider, external_id, name, url
+            SELECT provider, external_id, name, url, image_url
             FROM products
             WHERE id = ?
             """,
@@ -86,7 +86,7 @@ def get_product(product_id:int) -> Product | None:
         return None
 
     return Product(
-        provider=row[0], external_id=row[1], name=row[2], url=row[3]
+        provider=row[0], external_id=row[1], name=row[2], url=row[3], image_url=row[4]
     )
 
 def get_product_id(provider: str, external_id: str) -> int | None:
@@ -151,7 +151,7 @@ def get_all_products() -> list[tuple[int, Product]]:
     try:
         cursor = connection.execute(
             """
-            SELECT id, provider, external_id, name, url
+            SELECT id, provider, external_id, name, url, image_url
             FROM products
             ORDER by id 
             """
@@ -169,8 +169,58 @@ def get_all_products() -> list[tuple[int, Product]]:
             external_id = row[2],
             name= row[3],
             url = row[4],
+            image_url= row[5],
         )
 
         tracked_products.append((product_id, product))
     
     return tracked_products
+
+def update_products(product_id: int, product: Product) -> None:
+    connection = create_connection()
+
+    try:
+        connection.execute(
+            """
+            UPDATE products
+            SET 
+                name = ?,
+                url = ?,
+                image_url = ?
+            WHERE id = ?
+            """,
+            (
+                product.name,
+                product.url,
+                product.image_url,
+                product_id,
+            )
+        )
+        connection.commit()
+    finally:
+        connection.close()
+
+
+def delete_product(product_id: int):
+    connection = create_connection()
+
+    try:
+        connection.execute(
+            """
+            DELETE FROM product_snapshots
+            WHERE product_id = ?
+            """,
+            (product_id,)
+        )
+
+        connection.execute(
+            """
+            DELETE FROM products
+            WHERE id = ?
+            """,
+            (product_id,)
+        )
+
+        connection.commit()
+    finally:
+        connection.close()
