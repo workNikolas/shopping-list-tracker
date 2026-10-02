@@ -1,0 +1,224 @@
+/* Global ------------------------------------------------------------- */
+
+QWidget {
+    color: #071013;
+    font-family: "Segoe UI";
+    font-size: 13px;
+}
+
+QMainWindow,
+QWidget#centralWidget {
+    background-color: #EDEAD0;
+}
+
+QLabel#appSubtitle {
+    color: #071013;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 3px 0 7px 2px;
+}
+
+/* Panels and headers ------------------------------------------------- */
+
+QWidget#panel {
+    background-color: #FFFFFF;
+    border: 1px solid #071013;
+}
+
+QWidget#panelHeader {
+    background-color: #D8D4B5;
+    border: none;
+    border-bottom: 1px solid #071013;
+}
+
+QLabel#panelTitle,
+QLabel#sectionTitle {
+    background-color: #D8D4B5;
+    color: #071013;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+QLabel#panelTitle {
+    border: none;
+    border-bottom: 1px solid #071013;
+    padding: 7px 10px;
+}
+
+QWidget#panelHeader QLabel#panelTitle {
+    border: none;
+    padding: 0;
+}
+
+QLabel#sectionTitle {
+    border: none;
+    border-top: 1px solid #071013;
+    border-bottom: 1px solid #071013;
+    padding: 7px 10px;
+}
+
+QWidget#detailsContent {
+    background-color: #FFFFFF;
+    border: none;
+}
+
+/* Input -------------------------------------------------------------- */
+
+QLineEdit#urlInput {
+    background-color: #FFFFFF;
+    color: #071013;
+    border: 1px solid #071013;
+    padding: 7px 9px;
+    selection-background-color: #537A5A;
+    selection-color: #FFFFFF;
+}
+
+QLineEdit#urlInput:focus {
+    border: 2px solid #537A5A;
+    padding: 6px 8px;
+}
+
+/* Buttons ------------------------------------------------------------ */
+
+QPushButton {
+    min-height: 30px;
+    padding: 3px 16px;
+    background-color: #FFFFFF;
+    color: #071013;
+    border: 1px solid #071013;
+    border-radius: 0;
+    font-weight: 600;
+}
+
+QPushButton:hover {
+    background-color: #EDEAD0;
+}
+
+QPushButton:pressed {
+    background-color: #D8D4B5;
+}
+
+QPushButton#primaryButton {
+    background-color: #537A5A;
+    color: #FFFFFF;
+    border-color: #071013;
+    font-weight: 700;
+}
+
+QPushButton#primaryButton:hover {
+    background-color: #466B4E;
+}
+
+QPushButton#primaryButton:pressed {
+    background-color: #36583F;
+}
+
+QPushButton#secondaryButton {
+    background-color: #FFFFFF;
+    color: #537A5A;
+    border-color: #537A5A;
+    font-weight: 700;
+}
+
+QPushButton#secondaryButton:hover {
+    background-color: #537A5A;
+    color: #FFFFFF;
+}
+
+QPushButton#secondaryButton:pressed {
+    background-color: #466B4E;
+    color: #FFFFFF;
+}
+
+QPushButton#dangerButton {
+    background-color: #FFFFFF;
+    color: #6B0504;
+    border-color: #6B0504;
+    font-weight: 700;
+}
+
+QPushButton#dangerButton:hover {
+    background-color: #6B0504;
+    color: #FFFFFF;
+}
+
+QPushButton#dangerButton:pressed {
+    background-color: #4F0303;
+    color: #FFFFFF;
+}
+
+QPushButton:disabled {
+    background-color: #E6E3CF;
+    color: #86615C;
+    border-color: #86615C;
+}
+
+/* Product list ------------------------------------------------------- */
+
+QListWidget#productList {
+    background-color: #FFFFFF;
+    color: #071013;
+    border: none;
+    outline: none;
+    padding: 0;
+}
+
+QListWidget#productList::item {
+    background-color: #FFFFFF;
+    color: #071013;
+    border: none;
+    border-bottom: 1px solid #D7D3BD;
+    padding: 8px 9px;
+}
+
+QListWidget#productList::item:hover {
+    background-color: #EDEAD0;
+}
+
+QListWidget#productList::item:selected {
+    background-color: #537A5A;
+    color: #FFFFFF;
+}
+
+/* Product details ---------------------------------------------------- */
+
+QLabel#detailsPlaceholder {
+    color: #86615C;
+    font-style: italic;
+}
+
+QLabel#productImage {
+    background-color: #FFFFFF;
+}
+
+QLabel#productName {
+    color: #071013;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+QLabel#secondaryText {
+    color: #474747;
+}
+
+QLabel#rating {
+    color: #071013;
+    font-weight: 600;
+}
+
+QLabel#currentPrice {
+    color: #071013;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+QWidget#priceCanvas {
+    background-color: #FFFFFF;
+    border: none;
+}
+
+QLabel#lastChecked {
+    background-color: #FFFFFF;
+    color: #474747;
+    padding: 3px 8px 6px 8px;
+}
