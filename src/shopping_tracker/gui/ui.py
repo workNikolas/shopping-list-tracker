@@ -49,9 +49,6 @@ class MainWindow(QMainWindow):
         self.apply_styles()
         self.load_db()
 
-    # ------------------------------------------------------------------
-    # Window and widgets
-    # ------------------------------------------------------------------
 
     def setup_window(self):
         self.setWindowTitle("Shopping Tracker")
@@ -135,9 +132,6 @@ class MainWindow(QMainWindow):
         self.last_checked_label = QLabel()
         self.last_checked_label.setObjectName("lastChecked")
 
-    # ------------------------------------------------------------------
-    # Layout
-    # ------------------------------------------------------------------
 
     def create_layouts(self):
         self.central = QWidget()

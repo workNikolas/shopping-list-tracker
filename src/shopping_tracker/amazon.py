@@ -97,18 +97,42 @@ class AmazonParser:
             return image_url
 
         return None
-        
+
+
 def get_asin(url: str) -> str | None:
     parsed_url = urlparse(url)
-    parts = parsed_url.path.split("/")
 
-    try:
-        dp_index = parts.index("dp")
-        candidate = parts[dp_index + 1]
-    except (ValueError, IndexError):
-        return None
+    parts = [
+        part
+        for part in parsed_url.path.split("/")
+        if part
+    ]
 
-    if len(candidate) != 10 or not candidate.isalnum():
-        return None
-    
-    return candidate
+    # Pattern 1:
+    # /dp/{ASIN}
+    for index, part in enumerate(parts):
+        if part == "dp":
+            if index + 1 >= len(parts):
+                return None
+
+            candidate = parts[index + 1]
+
+            if len(candidate) == 10 and candidate.isalnum():
+                return candidate
+
+    # Pattern 2:
+    # /gp/product/{ASIN}
+    for index, part in enumerate(parts):
+        if part == "gp":
+            if index + 2 >= len(parts):
+                return None
+
+            if parts[index + 1] != "product":
+                continue
+
+            candidate = parts[index + 2]
+
+            if len(candidate) == 10 and candidate.isalnum():
+                return candidate
+
+    return None

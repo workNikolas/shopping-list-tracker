@@ -67,8 +67,6 @@ def migrate_add_image_url() -> None:
             connection.commit()
     finally:
         connection.close()
-        
-
 
 if __name__ == "__main__":
     initialize_database()
